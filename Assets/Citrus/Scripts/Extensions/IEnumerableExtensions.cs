@@ -5,7 +5,7 @@ namespace Citrus {
     /// <summary>
     /// IEnumerable<>拡張
     /// </summary>
-    public static class IEnumerableExtensions {
+    public static partial class IEnumerableExtensions {
 
         /// <summary>
         /// 全ての要素についてactionを実行する
