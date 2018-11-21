@@ -1,0 +1,12 @@
+{
+    "name": "Citrus.Editor",
+    "references": [
+        "Citrus"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
