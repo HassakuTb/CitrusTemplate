@@ -1,0 +1,18 @@
+using Citrus;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UniRx;
+
+namespace #NAMESPACE# {
+    
+    //  Singleton
+    public class #SCRIPTNAME# : Singleton<#SCRIPTNAME#> {
+    
+        public #SCRIPTNAME#()
+        {
+            //	initialize
+        }
+    }
+}

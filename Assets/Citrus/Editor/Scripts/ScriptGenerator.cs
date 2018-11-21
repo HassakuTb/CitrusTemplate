@@ -27,6 +27,7 @@ namespace Citrus.Editor {
         private enum ScriptEnum {
             MonoBehaviour,
             SingletonMonoBehaviour,
+            Singleton,
         }
 
         private static IEnumerable<ScriptItem> EnumerateScriptItem()
@@ -42,6 +43,12 @@ namespace Citrus.Editor {
                 script = ScriptEnum.SingletonMonoBehaviour,
                 templatePath = templateFolderPath + "SingletonMonoBehaviour.txt",
                 defaultFilename = "NewSingletonMonoBehaviour",
+            };
+            yield return new ScriptItem
+            {
+                script = ScriptEnum.Singleton,
+                templatePath = templateFolderPath + "Singleton.txt",
+                defaultFilename = "NewSingleton",
             };
         }
         
