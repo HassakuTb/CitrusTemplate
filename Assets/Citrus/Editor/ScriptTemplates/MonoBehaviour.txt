@@ -1,0 +1,16 @@
+using Citrus;
+using UnityEngine;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UniRx;
+
+namespace #NAMESPACE# {
+    
+    //  MonoBehaviour
+    [AddComponentMenu("#COMPONENTMENUPATH#")]
+    public class #SCRIPTNAME# : MonoBehaviour {
+    
+    }
+}

@@ -25,11 +25,18 @@ namespace Citrus.Editor {
 
         //  生成可能なスクリプトを列挙
         private enum ScriptEnum {
+            MonoBehaviour,
             SingletonMonoBehaviour,
         }
 
         private static IEnumerable<ScriptItem> EnumerateScriptItem()
         {
+            yield return new ScriptItem
+            {
+                script = ScriptEnum.MonoBehaviour,
+                templatePath = templateFolderPath + "MonoBehaviour.txt",
+                defaultFilename = "NewMonoBehaviour",
+            };
             yield return new ScriptItem
             {
                 script = ScriptEnum.SingletonMonoBehaviour,
@@ -63,8 +70,8 @@ namespace Citrus.Editor {
             var paths = window.path.Split('/').SkipWhile(x => x != "Scripts").Skip(1);
             string namespaceStr = PlayerSettings.productName + "." + string.Join(".", paths);
 
-            window.script = ScriptEnum.SingletonMonoBehaviour;
-            window.previousScript = ScriptEnum.SingletonMonoBehaviour;
+            window.script = ScriptEnum.MonoBehaviour;
+            window.previousScript = ScriptEnum.MonoBehaviour;
             window.namespaceString = namespaceStr;
             window.fileName = itemDictionary[window.script].defaultFilename;
         }
@@ -87,8 +94,13 @@ namespace Citrus.Editor {
             }
 
             while (namespaceString.EndsWith(".")) namespaceString = namespaceString.Substring(0, namespaceString.Length - 1);
+
+            var paths = path.Split('/').SkipWhile(x => x != "Scripts").Skip(1);
+            string componentMenuPath = PlayerSettings.productName + "/" + string.Join("/", paths);
+
             string code = template
                 .Replace("#SCRIPTNAME#", fileName)
+                .Replace("#COMPONENTMENUPATH#", componentMenuPath)
                 .Replace("#NAMESPACE#", namespaceString);
 
             File.WriteAllText(path + "/" + fileName + ".cs", code, Encoding.UTF8);
