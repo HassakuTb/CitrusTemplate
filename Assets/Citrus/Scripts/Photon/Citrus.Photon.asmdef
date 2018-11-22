@@ -1,0 +1,10 @@
+{
+    "name": "Citrus.Photon",
+    "references": [
+        "Citrus"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
