@@ -104,7 +104,6 @@ namespace Citrus {
         /// エラーを発行して処理を中断する
         /// </summary>
         /// <remarks>
-        /// yield breakと共に利用する
         /// Exceptionで処理を中断したいコルーチンはcatch節でRaiseErrorを実行するように実装する
         /// 発行したエラーはコンストラクタ引数のonErrorコールバックで取得可能
         /// </remarks>
@@ -166,9 +165,15 @@ namespace Citrus {
                     yield break;
                 }
 
-                yield return queue.Peek();
-                queue.Dequeue();
-
+                IEnumerator peek = queue.Peek();
+                if (peek.MoveNext())
+                {
+                    yield return peek.Current;
+                }
+                else
+                {
+                    queue.Dequeue();
+                }
             }
         }
     }
