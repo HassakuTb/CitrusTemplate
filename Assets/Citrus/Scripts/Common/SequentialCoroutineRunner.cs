@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Citrus {
     /// <summary>
@@ -39,6 +40,18 @@ namespace Citrus {
         //  エラー時処理
         private readonly Action<object> onError;
 
+        //  タイムアウト時間
+        private float timeout;
+
+        /// <summary>
+        /// タイムアウトがあるか取得する
+        /// デフォルトタイムアウトはなし
+        /// </summary>
+        public bool HasTimeout { get; private set; }
+
+        //  タイムアウト時処理
+        private Action onTimeout;
+
         /// <summary>
         /// 連続したコルーチンを処理するインスタンスを生成する
         /// </summary>
@@ -65,6 +78,26 @@ namespace Citrus {
             : this(onComplete, onError)
         {
             Append(coroutines);
+        }
+
+        /// <summary>
+        /// タイムアウトを設定する
+        /// </summary>
+        /// <param name="time">タイムアウト時間</param>
+        /// <param name="onTimeout">タイムアウト時の処理</param>
+        public void SetTimeout(float time, Action onTimeout = null)
+        {
+            HasTimeout = true;
+            this.onTimeout = onTimeout;
+            timeout = time;
+        }
+
+        /// <summary>
+        /// タイムアウトを無効にする
+        /// </summary>
+        public void DisableTimeout()
+        {
+            HasTimeout = false;
         }
 
         /// <summary>
@@ -146,11 +179,19 @@ namespace Citrus {
         /// <returns></returns>
         public IEnumerator Coroutine()
         {
+            float startTime = Time.realtimeSinceStartup;
+
             while (true)
             {
+                if (HasTimeout && Time.realtimeSinceStartup - startTime > timeout)
+                {
+                    onTimeout?.Invoke();
+                    yield break;
+                }
+
                 if (isRaisedError)
                 {
-                    if (onError != null) onError(Error);
+                    onError?.Invoke(Error);
                     yield break;
                 }
 
@@ -161,7 +202,7 @@ namespace Citrus {
 
                 if (queue.Count == 0)
                 {
-                    if (onComplete != null) onComplete();
+                    onComplete?.Invoke();
                     yield break;
                 }
 
