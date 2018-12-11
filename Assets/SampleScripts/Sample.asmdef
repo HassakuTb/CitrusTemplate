@@ -1,0 +1,10 @@
+{
+    "name": "Sample",
+    "references": [
+        "Citrus"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
+}
